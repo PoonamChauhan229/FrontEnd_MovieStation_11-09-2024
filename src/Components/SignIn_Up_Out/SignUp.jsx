@@ -2,9 +2,9 @@ import { useFormik } from 'formik'
 import * as Yup from "yup";
 import { url } from '../../utils/constant';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 function SignUp() {
-
+  const navigate=useNavigate()
 
   const formSchema=Yup.object().shape({
     name:Yup.string().min(5,"Too Short"),
@@ -38,7 +38,10 @@ const postSignUpUser=async(newUser)=>{
   // http://localhost:8000/signup
   const res=await axios.post(`${url}/signup`,newUser)
   console.log(res)  
-  
+  if(res.status==200){
+    // navigate to signin page  >>/signin
+    navigate('/signin')
+  }
 }
 
   return (
