@@ -23,6 +23,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import SignUp from './Components/SignIn_Up_Out/SignUp';
 import SignOut from './Components/SignIn_Up_Out/SignOut';
 import SignIn from './Components/SignIn_Up_Out/SignIn';
+import { url } from './utils/constant';
 function App() {
   const AboutUs_LastSection = [
     {    
@@ -45,7 +46,8 @@ function App() {
 
   const getMovieData = async()=>{
     console.log("Movie data is called...")
-    let res = await fetch ('https://66760c9da8d2b4d072f24534.mockapi.io/movie/movie')
+    // let res = await fetch (`https://66760c9da8d2b4d072f24534.mockapi.io/movie/movie`)
+    let res = await fetch (`${url}/movie`)
     let data = await res.json()
     console.log(data)
     setMovieData(data)

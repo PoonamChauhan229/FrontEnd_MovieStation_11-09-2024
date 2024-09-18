@@ -12,3 +12,20 @@ git clone githuburl
 
 >> terminal
 >> npm run dev
+
+Fumika:
+New URL :https://github.com/Fumika0523/FrontEnd_MovieStation_11-09-2024
+
+Poonam 
+URL:https://github.com/PoonamChauhan229/FrontEnd_MovieStation_11-09-2024
+
+
+AddMovie >> Storing MOCK API(MOCKAPI DB) >> ALL MOVIES
+
+AddMovie >> MONGO DB >> ALL MOVIES
+
+POSTMAN>>
+HIT REQ >> POST
+router.post('/addmovie',async(req,res)=>{
+    //req.body
+})
