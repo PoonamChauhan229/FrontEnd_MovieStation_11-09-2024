@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import cartContext from "../utils/cartContext";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
@@ -6,9 +6,13 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-function NavBar({ mode, setMode }) {
+function NavBar({ mode, setMode,isAuthenticated,setIsAuthenticated }) {
+  const token=sessionStorage.getItem('token')
+  console.log("token",token)
   const location = useLocation();
   console.log(location)
+
+  const navigate=useNavigate()
 
   // const excludedPaths = [`/movie/in/The%20Godfather`]; //paths where header should be excpluded
   const includedPaths = ["/", "/allmovies", "/about", "/services", "/contact", "/signup", "/signin"] //2nd option, rount you wanted you mention the all pages that you want to show
@@ -34,6 +38,12 @@ function NavBar({ mode, setMode }) {
       navEl.classList.remove('navbar-scrolled');
     }
   })
+
+  const handleSignOut=()=>{
+    sessionStorage.removeItem('token')
+    navigate('/')
+
+  }
 
   return (
     <>
@@ -71,11 +81,24 @@ function NavBar({ mode, setMode }) {
                     this.setState({
                       query: this.search.value
                     }, this.filterArray)
-                  }} />
-                <a className="nav-link"><button className="btn text-white text-nowrap mx-2" type="submit"><Link to='/signin' className="text-secondary text-decoration-none">Sign in</Link></button></a>
-                <a className="nav-link"><button type="submit" className="btn btn-secondary me-3 text-nowrap "><Link to='/signup' className=" text-decoration-none mx-1 text-white">Sign up</Link></button> </a>
+                  }} />                
               </div>
             </form>
+            
+            <div>
+            {token ?
+            <button type="submit" className="btn btn-secondary me-3 text-nowrap " onClick={()=>handleSignOut()}>SignOut</button>
+            :
+            <>           
+            <button className="btn text-white text-nowrap mx-2" type="submit"
+            onClick={()=>{navigate('/signin')}}
+            >SignIn</button>
+            <button type="submit" className="btn btn-secondary me-3 text-nowrap "
+             onClick={()=>{navigate('/signup')}}
+            >SignUp</button>
+            </>          
+          }  
+            </div>
             <div className="me-3"><span
               onClick={() => {
                 //setMode("light")
