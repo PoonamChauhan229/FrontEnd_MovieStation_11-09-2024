@@ -11,7 +11,6 @@ import MovieInfo_ReactBoostrap from './Components/Movie/MovieInfo_ReactBoostrap'
 import React, {useEffect,useState} from 'react'
 import AddMovie_UI from './Components/Material_UI/AddMovie_UI'
 import EditMovie from './Components/Movie/EditMovie';
-// https://66760c9da8d2b4d072f24534.mockapi.io/movie/movie
 import cartContext from "./utils/cartContext";
 import textContext from './utils/textContext';
 import store from './utils/store';
@@ -23,6 +22,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import SignUp from './Components/SignIn_Up_Out/SignUp';
 import SignOut from './Components/SignIn_Up_Out/SignOut';
 import SignIn from './Components/SignIn_Up_Out/SignIn';
+import AddMovie_Formik from './Components/Movie/AddMovie_Formik'
 import { url } from './utils/constant';
 function App() {
   const AboutUs_LastSection = [

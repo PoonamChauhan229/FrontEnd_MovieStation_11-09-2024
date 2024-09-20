@@ -72,18 +72,7 @@ function NavBar({ mode, setMode,isAuthenticated,setIsAuthenticated }) {
               {/* <!-- Contact Us --> */}
               <a className="nav-link"><Link to='/contact' className="text-secondary text-decoration-none me-2">Contact</Link></a>
             </ul>
-            {/* Search*/}
-            <form>
-              <div className="iput-icons d-flex flex-row">
-                <i className="fas fa-search icon fs-4 pt-2 ps-3 "></i>
-                <input className="form-control px-5 me-2" type="search" aria-label="Search" name="" id="" placeholder="Search movie"
-                  onChange={() => {
-                    this.setState({
-                      query: this.search.value
-                    }, this.filterArray)
-                  }} />                
-              </div>
-            </form>
+           
             
             <div>
             {token ?
