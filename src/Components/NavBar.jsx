@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Button } from "@mui/material";
 
 function NavBar({ mode, setMode,isAuthenticated,setIsAuthenticated }) {
   const token=sessionStorage.getItem('token')
@@ -41,10 +42,11 @@ function NavBar({ mode, setMode,isAuthenticated,setIsAuthenticated }) {
 
   const handleSignOut=()=>{
     sessionStorage.removeItem('token')
+    sessionStorage.removeItem('username')
     navigate('/')
 
   }
-
+  let username=sessionStorage.getItem('username')
   return (
     <>
       <nav className="navbar navbarStyle sticky-top navbar-expand-lg">
@@ -56,27 +58,31 @@ function NavBar({ mode, setMode,isAuthenticated,setIsAuthenticated }) {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               {/* <!-- Home --> */}
-              <a className="nav-link"><Link to='/' className="text-secondary text-decoration-none">Home</Link></a>
+              <Button variant="text" onClick={()=>navigate('/')}>Home</Button>
               {/* <!-- About Us --> */}
-              <a className="nav-link"><Link to='/about' className="text-secondary text-decoration-none" >About Us</Link></a>
+              <Button variant="text" onClick={()=>navigate('/about')}>About Us</Button>
               {/* Movie */}
-              <a className="nav-link"><Link to='/allmovies' className="text-secondary text-decoration-none">All Movies</Link></a>
+              <Button variant="text" onClick={()=>navigate('/allmovies')}>All Movies</Button>
               {/* AddMovie */}
-              <a className="nav-link"><Link to='/addmovie' className="text-secondary text-decoration-none">Add Movie</Link></a>
+              <Button variant="text" onClick={()=>navigate('/addmovie')}>Add Movie</Button>
               {/* Cart */}
-              {/* <div><Link to='/addtocart' className="text-secondary text-decoration-none">Add to Cart{cartNavbar}</Link></div> */}
+              
               {/* Redux */}
-              <a className="nav-link"><Link to='/cartpage' className="text-secondary text-decoration-none"><ShoppingCartIcon />{cartItems.length}</Link></a>
+              <Button variant="text" onClick={()=>navigate('/cartpage')}><ShoppingCartIcon />{cartItems.length}</Button>
               {/* <!-- Service --> */}
-              <a className="nav-link"><Link to='/services' className="text-secondary text-decoration-none">Service</Link></a>
+              <Button variant="text" onClick={()=>navigate('/services')}>Service</Button>
               {/* <!-- Contact Us --> */}
-              <a className="nav-link"><Link to='/contact' className="text-secondary text-decoration-none me-2">Contact</Link></a>
+              <Button variant="text" onClick={()=>navigate('/contact')}>Contact</Button>
             </ul>
            
             
             <div>
             {token ?
+            <>
+            <span  className="  me-2 ">Hi , {username}</span>
             <button type="submit" className="btn btn-secondary me-3 text-nowrap " onClick={()=>handleSignOut()}>SignOut</button>
+            
+            </>
             :
             <>           
             <button className="btn text-white text-nowrap mx-2" type="submit"

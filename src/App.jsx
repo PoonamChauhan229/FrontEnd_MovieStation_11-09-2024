@@ -64,7 +64,7 @@ function App() {
       }
     }
     console.log("Movie data is called....");
-    let res = await axios.get(`${url}/movie`,config)
+    let res = await axios.get(`${url}/movie`,config) // res.data.movieData
     console.log(res.data.movieData);
     setMovieData(res.data.movieData);
   };

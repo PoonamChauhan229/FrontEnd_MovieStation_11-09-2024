@@ -32,6 +32,7 @@ const postSignInUser=async(loginuser)=>{
   const res=await axios.post(`${url}/signin`,loginuser)
   console.log(res.data)
   sessionStorage.setItem('token',res.data.token)
+  sessionStorage.setItem('username',res.data.user.name)
   if(res.data.token){
     setIsAuthenticated(true)
   }  
