@@ -9,7 +9,6 @@ import {Route,Routes} from 'react-router-dom';
 import Footer from './Components/Footer';
 import MovieInfo_ReactBoostrap from './Components/Movie/MovieInfo_ReactBoostrap'
 import React, {useEffect,useState} from 'react'
-import AddMovie_UI from './Components/Material_UI/AddMovie_UI'
 import EditMovie from './Components/Movie/EditMovie';
 import cartContext from "./utils/cartContext";
 import textContext from './utils/textContext';
@@ -22,8 +21,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import SignUp from './Components/SignIn_Up_Out/SignUp';
 import SignOut from './Components/SignIn_Up_Out/SignOut';
 import SignIn from './Components/SignIn_Up_Out/SignIn';
-import AddMovie_Formik from './Components/Movie/AddMovie_Formik'
 import { url } from './utils/constant';
+import AddMovie from './Components/Movie/AddMovie';
+import axios from 'axios';
 function App() {
   const AboutUs_LastSection = [
     {    
@@ -56,14 +56,18 @@ function App() {
     }
   },[])
 
-  const getMovieData = async()=>{
-    console.log("Movie data is called...")
-    // let res = await fetch (`https://66760c9da8d2b4d072f24534.mockapi.io/movie/movie`)
-    let res = await fetch (`${url}/movie`)
-    let data = await res.json()
-    console.log(data)
-    setMovieData(data)
-  }
+  const getMovieData = async () => {
+    const token=sessionStorage.getItem('token')
+    let config={
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    }
+    console.log("Movie data is called....");
+    let res = await axios.get(`${url}/movie`,config)
+    console.log(res.data.movieData);
+    setMovieData(res.data.movieData);
+  };
 
   useEffect(()=>{
     getMovieData()
@@ -89,7 +93,7 @@ const [mode, setMode]=useState("dark")
     <Routes>
       <Route path="/" element={<Homepage movieData={movieData}/>}/>
       <Route path='/allmovies' element={<MovieDisplay movieData={movieData} setMovieData={setMovieData}/>}/>
-      <Route path='/addmovie' element={<AddMovie_UI setMovieData={setMovieData}/>}/>
+      <Route path='/addmovie' element={<AddMovie setMovieData={setMovieData}/>}/>
       <Route path='/about' element={<AboutUs_Section/>}/>
       <Route path='/services' element={<Service_Section/>}/>
       <Route path='/contact' element={<ContactUs_Section/>}/>
