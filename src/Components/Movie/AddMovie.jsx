@@ -1,98 +1,94 @@
-import Stack from "@mui/material/Stack";
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import { useFormik } from "formik";
+import Stack from '@mui/material/Stack';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { url } from "../../utils/constant";
+import { useFormik } from 'formik'
+import {url} from '../../utils/constant'
+import axios from 'axios';
 
-export default function AddMovie({ setMovieData }) {
-  const navigate = useNavigate();
 
-  const formSchema = Yup.object().shape({
-    moviename: Yup.string().min(5, "Too Short"),
-    movieposter: Yup.string()
-      .min(5, "Too Short")
-      .max(20, "Movie Name too long"),
-    rating: Yup.number().required().positive(),
-    summary: Yup.string().min(5, "Too Short").max(250, "Summary Too long"),
-    cast: Yup.string().min(5, "Too Short").max(250, "Too Long"),
-    trailer: Yup.string().required(),
-    publishYear: Yup.string().required(),
-    likeNum: Yup.string().required(),
-    disLikeNum: Yup.string().required(),
-    genres: Yup.number().required(),
-    category: Yup.string().required(),
-  });
+export default function AddMovie({setMovieData}) {
+const navigate = useNavigate();
 
-  const formik = useFormik({
-    initialValues: {
-      moviename: "",
-      movieposter: "",
-      rating: "",
-      summary: "",
-      cast: "",
-      trailer: "",
-      publishYear: "",
-      likeNum: "",
-      disLikeNum: "",
-      genres: "",
-      category: "",
-    },
-    // validationSchema:formSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      postMovies(values);
-    },
-  });
+const formSchema=Yup.object().shape({
+  moviename:Yup.string().min(5,"Too Short"),
+  movieposter:Yup.string().min(5,"Too Short").max(20,"Movie Name too long"),
+  rating:Yup.number().required().positive(),
+  summary:Yup.string().min(5,"Too Short").max(250,"Summary Too long"),
+  cast:Yup.string().min(5,"Too Short").max(250,"Too Long"),
+  trailer:Yup.string().required(),
+  publishYear:Yup.string().required(),
+  likeNum:Yup.string().required(),
+  disLikeNum:Yup.string().required(),
+  genres:Yup.number().required(),
+  category:Yup.string().required(),
+})
 
-  const postMovies = async (newMovie) => {
-    const token=sessionStorage.getItem('token')
-    // console.log(token)
-    // console.log("Movie Posted to the DB..");
-    // console.log("NEW MOVIE:", newMovie);
-    let config={
-      headers:{
-        Authorization:`Bearer ${token}`
-      }
-    }
-    let res = await axios.post(`${url}/addmovie`,newMovie,config)
-    console.log(res);
-    getMovieData();
-  };
+const formik=useFormik({
+  initialValues:{
+      moviename:"",
+      movieposter:"",
+      rating:"",
+      summary:"",
+      cast:"",
+      trailer:"",
+      publishYear:"",
+      likeNum:"",
+      disLikeNum:"",
+      genres:"",
+      category:"",
+  },
+  // validationSchema:formSchema,
+  onSubmit:(values)=>{ 
+      console.log(values) 
+      postMovies(values)
+  }   
+})
+const token = sessionStorage.getItem('token')
+console.log(token)
 
-  // if /movie route in backend is poupulating the data
-  const getMovieData = async () => {
-    const token=sessionStorage.getItem('token')
-    let config={
-      headers:{
-        Authorization:`Bearer ${token}`
-      }
-    }
-    console.log("Movie data is called....");
-    let res = await axios.get(`${url}/movie`,config)
-    console.log(res.data.movieData);
-    setMovieData(res.data.movieData);
-  };
+let config = {
+  headers:{
+    Authorization:`Bearer ${token}`
+  }
+}
+
+const postMovies=async(newMovie)=>{
+   console.log("Movie Posted to the DB..")
+  console.log("NEW MOVIE:",newMovie)
+
+
+let res = await axios.post(`${url}/addmovie`,newMovie,config)
+console.log(res)
+getMovieData();
+}
+
+//updating a data toer
+const getMovieData=async()=>{
+  console.log("Movie data is called....")
+  let res = await fetch(`${url}/movie`,config)//API call to get all movie data
+  let data = await res.json()//responding in string, conver to json format
+  console.log(data)
+  setMovieData(data)
+}
+
   return (
-    <Box
+    <div className='container py-5'>
+    <div className='fs-1 text-center pb-4'>Add Movie</div>
+   <Box
       component="form"
       sx={{
-        "& .MuiTextField-root": { width: "45ch" },
+        '& .MuiTextField-root': { width: '45ch' },
       }}
       noValidate
-      autoComplete="off"
-      onSubmit={formik.handleSubmit}
+      autoComplete="off" 
+      onSubmit = {formik.handleSubmit}
     >
-      <Stack
-        direction="row"
-        useFlexGap
-        flexWrap="wrap"
-        spacing={{ xs: 2, sm: 4 }}
-      >
+       <Stack direction="row"  useFlexGap flexWrap="wrap" spacing={{ xs: 2, sm: 4 }}>
+  
         {/* MOVIE NAME */}
         <TextField
           required
@@ -101,26 +97,28 @@ export default function AddMovie({ setMovieData }) {
           id="moviename"
           onChange={formik.handleChange}
           defaultValue={formik.values.moviename}
-        />
-        {formik.errors.moviename && formik.touched.moviename ? (
+            />
+        {formik.errors.moviename && formik.touched.moviename? (
           <div>{formik.errors.moviename}</div>
-        ) : null}
+        ) : null }
 
         {/* MOVIE POSTER */}
-        <TextField
+         <TextField
           required
           label="Movie Poster"
           name="movieposter"
           id="movieposter"
           onChange={formik.handleChange}
           defaultValue={formik.values.movieposter}
+          
         />
-        {formik.errors.movieposter && formik.touched.movieposter ? (
+        {formik.errors.movieposter && formik.touched.movieposter? (
           <div>{formik.errors.moviename}</div>
-        ) : null}
+        ) : null }
+        
 
         {/* MOVIE Rating */}
-        <TextField
+            <TextField
           required
           label="Rating"
           name="rating"
@@ -128,108 +126,66 @@ export default function AddMovie({ setMovieData }) {
           onChange={formik.handleChange}
           defaultValue={formik.values.rating}
         />
-        {formik.errors.rating && formik.touched.rating ? (
+        {formik.errors.rating && formik.touched.rating? (
           <div>{formik.errors.rating}</div>
-        ) : null}
+        ) : null }
 
         {/* Category */}
-        <TextField
+            <TextField
           required
           label="Category"
-          name="category"
-          id="category"
-          onChange={formik.handleChange}
-          value={formik.values.category}
-        />
-
-        {/* MOVIE Cast */}
-        <TextField
+    name="category" id="category"  onChange={formik.handleChange} value={formik.values.category} /> 
+          
+           {/* MOVIE Cast */}
+           <TextField
           required
           label="Cast"
-          name="cast"
-          id="cast"
-          onChange={formik.handleChange}
-          value={formik.values.cast}
-        />
+          name="cast" id="cast"  onChange={formik.handleChange} value={formik.values.cast} /> 
 
         {/* MOVIE TRAILER */}
-        <TextField
+            <TextField
           required
           label="Movie Trailer"
-          name="trailer"
-          id="trailer"
-          onChange={formik.handleChange}
-          value={formik.values.trailer}
-        />
-
+          name="trailer" id="trailer"  onChange={formik.handleChange} value={formik.values.trailer} /> 
+    
         {/* Publish Year */}
-        <TextField
+            <TextField
           required
           label="Publish Year"
-          name="publishYear"
-          id="publishYear"
-          onChange={formik.handleChange}
-          value={formik.values.publishYear}
-        />
+          name="publishYear" id="publishYear"  onChange={formik.handleChange} value={formik.values.publishYear}/>
 
         {/* Like Num */}
-        <TextField
+            <TextField
           required
           label="Like Number"
-          name="likeNum"
-          id="likeNum"
-          onChange={formik.handleChange}
-          value={formik.values.likeNum}
-        />
+          name="likeNum" id="likeNum" onChange={formik.handleChange} value={formik.values.likeNum} />
+          
 
         {/* DISLIKE NUM */}
-        <TextField
+            <TextField
           required
           label="Dislike Number"
-          name="disLikeNum"
-          id="disLikeNum"
-          onChange={formik.handleChange}
-          value={formik.values.disLikeNum}
-        />
-
+          name="disLikeNum" id="disLikeNum"  onChange={formik.handleChange} value={formik.values.disLikeNum} />
+       
         {/* MOVIE GEnres */}
-        <TextField
+            <TextField
           required
           label="Movie Genres"
-          name="genres"
-          id="genres"
-          onChange={formik.handleChange}
-          value={formik.values.genres}
-        />
+          name='genres' id="genres"  onChange={formik.handleChange} value={formik.values.genres} /> 
+       
+  {/* Summary */}
+    <TextField required id="summary" 
+    label="Summary" name="summary"  onChange={formik.handleChange} value={formik.values.summary} /> 
 
-        {/* Summary */}
-        <TextField
-          required
-          id="summary"
-          label="Summary"
-          name="summary"
-          onChange={formik.handleChange}
-          value={formik.values.summary}
-        />
-      </Stack>
-      <div style={{ marginTop: "2%" }}>
-        {/* Back */}
-        <Button
-          style={{ backgroundColor: "grey", marginRight: "2%" }}
-          type="submit"
-          variant="contained"
-          onClick={() => {
-            navigate("/allmovies");
-          }}
-        >
-          BACK
-        </Button>
+  </Stack>
+  <div style={{marginTop:"2%"}} >
 
-        {/* ADD MOVIE */}
-        <Button color="warning" type="submit" variant="contained">
-          ADD MOVIE
-        </Button>
-      </div>
-    </Box>
-  );
-}
+    {/* Back */}
+    <Button style={{backgroundColor:"grey",marginRight:"2%"}} type="submit" variant="contained" onClick={()=>{navigate('/allmovies')}} >BACK</Button>
+
+  {/* ADD MOVIE */}
+  <Button color="warning" type="submit" variant="contained">ADD MOVIE</Button>
+</div>
+ </Box>
+</div>
+  );}

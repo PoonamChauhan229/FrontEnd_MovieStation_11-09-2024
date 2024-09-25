@@ -72,14 +72,14 @@ function NavBar({ mode, setMode,isAuthenticated,setIsAuthenticated }) {
               {/* <!-- Service --> */}
               <Button variant="text" onClick={()=>navigate('/services')}>Service</Button>
               {/* <!-- Contact Us --> */}
-              <Button variant="text" onClick={()=>navigate('/contact')}>Contact</Button>
+              <Button variant="text" color="success" onClick={()=>navigate('/contact')}>Contact</Button>
             </ul>
            
             
             <div>
             {token ?
             <>
-            <span  className="  me-2 ">Hi , {username}</span>
+            <span  className="  me-2  text-info">Hi , {username}</span>
             <button type="submit" className="btn btn-secondary me-3 text-nowrap " onClick={()=>handleSignOut()}>SignOut</button>
             
             </>
