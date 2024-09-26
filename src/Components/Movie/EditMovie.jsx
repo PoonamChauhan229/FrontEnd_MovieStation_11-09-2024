@@ -6,6 +6,7 @@ import textContext from "../../utils/textContext";
 function EditMovie(){
 const [singleMovie, setSingleMovies]=useState()
 const {id}=useParams()
+console.log(id)
 
 
 const getMovieData=async()=>{
@@ -25,7 +26,7 @@ useEffect(()=>{
         <>
         {
         singleMovie?
-        <EditMovieForm  singleMovie={singleMovie} id={id}/>//LOAD WHEN API COMPLETED
+        <EditMovieForm singleMovie={singleMovie} id={id}/>//LOAD WHEN API COMPLETED
         :
         <p>Loading..........</p>//When API CALL IS RUNNING
     }        
@@ -33,6 +34,7 @@ useEffect(()=>{
     )}
 export default EditMovie
 
+// Use the formik
 function EditMovieForm({singleMovie,id}){
 const [movieName,setMovieName]=useState(singleMovie.moviename)
 const [moviePoster,setMoviePoster]=useState(singleMovie.movieposter)
