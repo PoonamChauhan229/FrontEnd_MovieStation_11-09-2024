@@ -25,6 +25,7 @@ import AddMovie from './Components/Movie/AddMovie';
 import axios from 'axios';
 import AllEnquiries from './Components/Enquiries/AllEnquires';
 import ContactUs_Section from './Components/Enquiries/ContactUs_Section';
+import CustomizedTables from './Components/Enquiries/CustomizedTables';
 function App() {
   const AboutUs_LastSection = [
     {    
@@ -105,6 +106,7 @@ const [mode, setMode]=useState("dark")
       <Route path="/signup" element={<SignUp/>}></Route>
       <Route path="/signout" element={<SignOut/>}></Route>      
       <Route path="allenquiries" element={<AllEnquiries/>}></Route>
+      <Route path="/table" element={<CustomizedTables/>}></Route>
     </Routes>
     <div style={{position:"relative"}}>
     <Footer />
