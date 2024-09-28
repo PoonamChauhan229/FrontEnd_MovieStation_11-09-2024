@@ -1,6 +1,4 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import cartContext from "../utils/cartContext";
-import { useContext } from "react";
 import { useSelector } from "react-redux";
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -21,10 +19,6 @@ function NavBar({ mode, setMode, isAuthenticated, setIsAuthenticated }) {
   //Check if current path is in the excludedPaths array
   const shouldRenderHeader = includedPaths.includes(location.pathname)
   console.log(shouldRenderHeader)
-
-  const cartNavbar = useContext(cartContext)
-  console.log(cartNavbar)
-  console.log(useContext(cartContext))
 
   //subscribing to the store
   const cartItems = useSelector(store => store.cart.items)

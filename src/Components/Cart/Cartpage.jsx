@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import CartCard from "./CartCard"
-import { removeItem, removeLastItem,removeFirstItem } from "../utils/cartSlice"
+import { removeItem, removeLastItem,removeFirstItem } from "../../utils/cartSlice"
 
 
 function Cartpage(){
@@ -47,6 +47,9 @@ function Cartpage(){
         )
          }
         </div>
+
+
+        {/*  check some cart page  */}
          </>
     )
 }

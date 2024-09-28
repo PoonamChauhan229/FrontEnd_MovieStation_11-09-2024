@@ -14,15 +14,14 @@ function MovieTrailer(){
     console.log(id)
     const [movieInfo, setMovieInfo] = useState();
     const navigate = useNavigate()
-
     const token = sessionStorage.getItem('token')
-console.log(token)
+    console.log(token)
 
-let config = {
-  headers:{
-    Authorization:`Bearer ${token}`
-  }
-}
+    let config = {
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    }
     const getTrailerData= async()=>{
       console.log("Trailer data is called....")
         let res = await axios.get(`${url}/movie/${id}`,config)
@@ -31,7 +30,7 @@ let config = {
     }
     useEffect(()=>{
       getTrailerData()
-    },[]) //API Call
+    },[]) 
 
       return(
         <>
