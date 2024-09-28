@@ -7,13 +7,14 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Button } from "@mui/material";
 
-function NavBar({ mode, setMode,isAuthenticated,setIsAuthenticated }) {
-  const token=sessionStorage.getItem('token')
-  console.log("token",token)
+function NavBar({ mode, setMode, isAuthenticated, setIsAuthenticated }) {
+  const token = sessionStorage.getItem('token')
+  console.log("token", token)
+
+  const navigate = useNavigate()
+
   const location = useLocation();
   console.log(location)
-
-  const navigate=useNavigate()
 
   // const excludedPaths = [`/movie/in/The%20Godfather`]; //paths where header should be excpluded
   const includedPaths = ["/", "/allmovies", "/about", "/services", "/contact", "/signup", "/signin"] //2nd option, rount you wanted you mention the all pages that you want to show
@@ -32,68 +33,71 @@ function NavBar({ mode, setMode,isAuthenticated,setIsAuthenticated }) {
   //navbar-scrolled
   const navEl = document.querySelector('.navbar');
 
-  window.addEventListener('scroll',() => {
-    if (window.scrollY > 100 ) {
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
       navEl.classList.add('navbar-scrolled');
-    }else if(window.scrollY < 50 ){
+    } else if (window.scrollY < 50) {
       navEl.classList.remove('navbar-scrolled');
     }
   })
-
-  const handleSignOut=()=>{
+  const handleSignOut = () => {
     sessionStorage.removeItem('token')
-    sessionStorage.removeItem('username')
     navigate('/')
-
   }
-  let username=sessionStorage.getItem('username')
+
+  let username = sessionStorage.getItem('username')
   return (
     <>
-      <nav className="navbar navbarStyle sticky-top navbar-expand-lg">
-        <div className="container-fluid">
+      <nav className="navbar sticky-top navbar-expand-lg" >
+        <div className="container-fluid" >
+          {/* Brand */}
           <span className="ms-3 fs-4 text-warning navbar-brand"><i className="fa-solid fa-couch"></i><i className="fa-solid fa-wine-glass"></i><a className="navbar-brand text-white fs-5 ms-1" href="#">MovieStation</a></span>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+        {/* Toggler Icon */}
+          <button className="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+
+          <div className="collapse navbar-collapse justify-content-start" id="navbarSupportedContent">
+            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 text-warning">
               {/* <!-- Home --> */}
-              <Button variant="text" onClick={()=>navigate('/')}>Home</Button>
+              <Button variant="text" color="inherit" onClick={() => navigate('/')}>Home</Button>
               {/* <!-- About Us --> */}
-              <Button variant="text" onClick={()=>navigate('/about')}>About Us</Button>
+              <Button variant="text" color="inherit" onClick={() => navigate('/about')}>ABOUT US</Button>
+
               {/* Movie */}
-              <Button variant="text" onClick={()=>navigate('/allmovies')}>All Movies</Button>
+              <Button variant="text" color="inherit" onClick={() => navigate('/allmovies')}>All movies</Button>
+
               {/* AddMovie */}
-              <Button variant="text" onClick={()=>navigate('/addmovie')}>Add Movie</Button>
+              <Button variant="text" color="inherit" onClick={() => navigate('/addmovie')}>Add movie</Button>
               {/* Cart */}
-              
+              {/* <div><Link to='/addtocart' className="text-secondary text-decoration-none">Add to Cart{cartNavbar}</Link></div> */}
               {/* Redux */}
-              <Button variant="text" onClick={()=>navigate('/cartpage')}><ShoppingCartIcon />{cartItems.length}</Button>
+              <Button variant="text" color="inherit" onClick={() => navigate('/cartpage')}><ShoppingCartIcon />{cartItems.length}</Button>
+
               {/* <!-- Service --> */}
-              <Button variant="text" onClick={()=>navigate('/services')}>Service</Button>
+              <Button variant="text" color="inherit" onClick={() => navigate('/services')}>Service</Button>
               {/* <!-- Contact Us --> */}
-              <Button variant="text" color="success" onClick={()=>navigate('/contact')}>Contact</Button>
-            </ul>
-           
-            
-            <div>
-            {token ?
-            <>
-            <span  className="  me-2  text-info">Hi , {username}</span>
-            <button type="submit" className="btn btn-secondary me-3 text-nowrap " onClick={()=>handleSignOut()}>SignOut</button>
-            
-            </>
-            :
-            <>           
-            <button className="btn text-white text-nowrap mx-2" type="submit"
-            onClick={()=>{navigate('/signin')}}
-            >SignIn</button>
-            <button type="submit" className="btn btn-secondary me-3 text-nowrap "
-             onClick={()=>{navigate('/signup')}}
-            >SignUp</button>
-            </>          
-          }  
-            </div>
+              <Button variant="text" color="inherit" onClick={() => navigate('/contact')}>Contact</Button>
+   {/* Sign Out */}
+                <div>
+                {token ?
+                  <>
+                    <span className="mx-2">Hi, {username}</span>
+                    <Button variant="contained" color="inherit" className=" text-nowrap mx-2 " type="submit" onClick={() => handleSignOut()}>Sign out</Button>
+                  </>
+                  :
+                  <>
+                 
+                    {/* Sign in */}
+                    <Button variant="outlined" color="inherit" className="mx-2" type="submit" onClick={() => { navigate('/signin') }}>Sign in</Button>
+
+                    {/* Sign up */}
+                    <Button variant="contained" color="inherit" type="submit" className=" me-3 py-1 " onClick={() => { navigate('/signup') }}>Sign up</Button>
+                  </>
+                }
+              </div>
+        
             <div className="me-3"><span
               onClick={() => {
                 //setMode("light")
@@ -102,7 +106,9 @@ function NavBar({ mode, setMode,isAuthenticated,setIsAuthenticated }) {
                 console.log(mode)
               }}>
               {mode === "light" ? <DarkModeIcon /> : <LightModeIcon />}
-            </span></div>
+            </span>
+            </div>
+            </ul>
           </div>
         </div>
       </nav>

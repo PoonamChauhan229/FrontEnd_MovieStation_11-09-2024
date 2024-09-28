@@ -6,37 +6,28 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
+import {url} from '../../utils/constant'
+import axios from 'axios';
 
-function MovieInfo_ReactBoostrap({movieData}){
+function MovieTrailer(){
     const { id } = useParams();
+    console.log(id)
     const [movieInfo, setMovieInfo] = useState();
-
-    const fontStyle={
-        fontSize:"10.5px",
-        // border:"1px solid red",
-        // display:"flex",
-        // flexDirection:"flex-column"
-        display:"flex",
-        flexDirection:"column",
-        marginTop:"20%",
-    }
-
-    const iconStyle={
-      fontSize:"21px",
-      display:"flex",
-      flexDirection:"column",
-      marginLeft:"11%",
-      alignItems:"center"
-    }
-    // useNavigate()
     const navigate = useNavigate()
 
+    const token = sessionStorage.getItem('token')
+console.log(token)
+
+let config = {
+  headers:{
+    Authorization:`Bearer ${token}`
+  }
+}
     const getTrailerData= async()=>{
       console.log("Trailer data is called....")
-        let res = await fetch(`https://66760c9da8d2b4d072f24534.mockapi.io/movie/movie/${id}`)
-        let data = await res.json()
-        console.log(data)
-        setMovieInfo(data)
+        let res = await axios.get(`${url}/movie/${id}`,config)
+        console.log(res.data[0])
+        setMovieInfo(res.data[0])
     }
     useEffect(()=>{
       getTrailerData()
@@ -48,7 +39,7 @@ function MovieInfo_ReactBoostrap({movieData}){
           movieInfo && 
 <div>
 <Container>
-  <iframe src={movieInfo?.trailer} frameborder="0" className='opacity-75 mt-4' style={{width:"100%",height:"450px"}}></iframe>
+  <iframe src={movieInfo?.trailer} frameBorder="0" className='opacity-75 mt-4' style={{width:"100%",height:"450px"}}></iframe>
 </Container>
 {/* Middle Section */}
 <Container className='d-flex'  style={{ height:"450px"}}>
@@ -167,9 +158,5 @@ function MovieInfo_ReactBoostrap({movieData}){
   </>
     )
 }
-export default MovieInfo_ReactBoostrap
-
-//replace the images in carousel,
-//footer center
-//when you mouseover, the movie will be bigger Exactly like Netflix Info icon
+export default MovieTrailer
 

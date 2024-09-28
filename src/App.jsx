@@ -3,11 +3,13 @@ import AboutUs_Section from './Components/AboutUs_page/AboutUs_Section';
 import MovieDisplay from './Components/Movie/MovieDisplay';
 import NavBar from './Components/NavBar';
 import Service_Section from './Components/Service_page/Service_Section';
+import ContactUs_Section from './Components/Enquiries/ContactUs_Section';
 import Homepage from './Components/Homepage';
 import {Route,Routes} from 'react-router-dom';
 import Footer from './Components/Footer';
-import MovieInfo_ReactBoostrap from './Components/Movie/MovieInfo_ReactBoostrap'
+import MovieTrailer from './Components/Movie/MovieTrailer'
 import React, {useEffect,useState} from 'react'
+import AddMovie from './Components/Movie/AddMovie'
 import EditMovie from './Components/Movie/EditMovie';
 import cartContext from "./utils/cartContext";
 import textContext from './utils/textContext';
@@ -20,12 +22,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import SignUp from './Components/SignIn_Up_Out/SignUp';
 import SignOut from './Components/SignIn_Up_Out/SignOut';
 import SignIn from './Components/SignIn_Up_Out/SignIn';
-import { url } from './utils/constant';
-import AddMovie from './Components/Movie/AddMovie';
+import {url} from './utils/constant'
 import axios from 'axios';
-import AllEnquiries from './Components/Enquiries/AllEnquires';
-import ContactUs_Section from './Components/Enquiries/ContactUs_Section';
-import CustomizedTables from './Components/Enquiries/CustomizedTables';
+import AllEnquiries from './Components/Enquiries/AllEnquiries';
+import Table from './Components/Enquiries/CustomizedTables'
+
 function App() {
   const AboutUs_LastSection = [
     {    
@@ -46,30 +47,28 @@ function App() {
   const [cartUCtxt,setCartUtxt] = useState(0)  
   const [textUseContext,setTextUseContext] = useState("Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile devices, desktops/laptops, or another type of compatible computer.")
 
-  // signin part 
+// signin part
 
-  const [isAuthenticated,setIsAuthenticated]=useState(false)
+const [isAuthenticated,setIsAuthenticated]=useState(false)
 
-  useEffect(()=>{
-    const token=sessionStorage.getItem('token')
-    console.log(token)
-    if(token){
-      setIsAuthenticated(true)
+useEffect(()=>{
+   const token = sessionStorage.getItem('token')
+  console.log(token)
+  setIsAuthenticated(true)
+},[])
+
+const getMovieData = async () => {
+  const token=sessionStorage.getItem('token')
+  let config={
+    headers:{
+      Authorization:`Bearer ${token}`
     }
-  },[])
-
-  const getMovieData = async () => {
-    const token=sessionStorage.getItem('token')
-    let config={
-      headers:{
-        Authorization:`Bearer ${token}`
-      }
-    }
-    console.log("Movie data is called....");
-    let res = await axios.get(`${url}/movie`,config) // res.data.movieData
-    console.log(res.data.movieData);
-    setMovieData(res.data.movieData);
-  };
+  }
+  console.log("Movie data is called....");
+  let res = await axios.get(`${url}/movie`,config)//response in res.data >> moviedata
+  console.log(res.data.movieData);
+  setMovieData(res.data.movieData);
+};
 
   useEffect(()=>{
     getMovieData()
@@ -99,14 +98,14 @@ const [mode, setMode]=useState("dark")
       <Route path='/about' element={<AboutUs_Section/>}/>
       <Route path='/services' element={<Service_Section/>}/>
       <Route path='/contact' element={<ContactUs_Section/>}/>
-      <Route path="/movie/in/:id" element={<MovieInfo_ReactBoostrap movieData={movieData} setMovieData={setMovieData}/>}/>
+      <Route path="/movietrailer/:id" element={<MovieTrailer movieData={movieData} setMovieData={setMovieData}/>}/>
       <Route path="/editmovie/:id" element={<EditMovie movieData={movieData} />}/>
       <Route path="/cartpage" element={<Cartpage/>}></Route>
-      <Route path="/signin" element={<SignIn isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>}></Route>
+      <Route path="/signin" element={<SignIn isAuthenticated = {isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>}></Route>
       <Route path="/signup" element={<SignUp/>}></Route>
-      <Route path="/signout" element={<SignOut/>}></Route>      
+      <Route path="/signout" element={<SignOut/>}></Route>
       <Route path="allenquiries" element={<AllEnquiries/>}></Route>
-      <Route path="/table" element={<CustomizedTables/>}></Route>
+      <Route path="/table" element={<Table/>}></Route>
     </Routes>
     <div style={{position:"relative"}}>
     <Footer />
@@ -121,49 +120,4 @@ const [mode, setMode]=useState("dark")
   )
 }
 
-
 export default App
-
-// Collect and replace to the HD image of movie and name and casting, rating (GIVE A STAR : 1,2,3,,,,),summary (array of the object )
-// MovieDisplay.jsx:12 Warning: Each child in a list should have a unique "key" prop.
-
-// Check the render method of `MovieDisplay`. See https://reactjs.org/link/warning-keys for more information.
-//     at MovieCard (http://localhost:5173/src/Components/MovieCard.jsx?t=1718060192109:20:22)
-//     at MovieDisplay (http://localhost:5173/src/Components/MovieDisplay.jsx?t=1718060192109:18:25)
-//     at div
-//     at App
-
-// Warning: Each child in a list should have a unique "key" prop.//Analyse why Im getting this warning,
-// >> 
-
-//create a service page, like AboutUs, create components ★　　https://www.justwatch.com/in/apps
-//NavBar (No Testimonial,), navy colour: x,
-//array of object, create for movies,
-//footer component, justWatch only 1st line, -
-
-//Asos.com re-create in React, Boostrap., own css,
-
-//TASK:
-//1:before the theme button , create the search box >> input BOx
-// Type and search, onchange, useState useState variable <<< Filter method
-
-//2:Only visible on All Movie page
-
-//Footer, check the title
-//Add the icon for add to cart, Redux  
-//3 dots will link to particular page , trailer page, (Infor button)
-//Summary for arrow function hire/unhide (show only 3-4 line) all the cards are similar
-//Cast in rating
-//Add Movie, use Use Material, & UseFormik, side by side for input tag similar  to Contact Us page
-//Add Movie, message should be changed. check from other film website   
-//Remove Add Cart, and keep only Redux (Shopping Icon with number)    <<<--- DONE
-//About US is after the HOme page   <<<---- DONE
-//Remove the heading from All Movie page.     <<<------
-
-
-// arrow on All Movie, message overlay cover the above a half of image , expand to the above
-//service page 
-//shift home to the left side
-
-//signin and signup  >>>
-// SIgn out  >> when you are inside the application

@@ -29,36 +29,33 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-
-
 export default function CustomizedTables({enquiryData}) {
 
   return (
-    <TableContainer component={Paper} style={{width:"80%", margin:"3% 10%", }}>
+    <TableContainer component={Paper} style={{width:"80%", margin:"2% 10%", }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>First Name</StyledTableCell>
+            <StyledTableCell align="center">First Name</StyledTableCell>
             <StyledTableCell align="center">Last Name</StyledTableCell>
             <StyledTableCell align="center">Email</StyledTableCell>
-            <StyledTableCell align="center">Phone No</StyledTableCell>
+            <StyledTableCell align="center">Phone No.</StyledTableCell>
             <StyledTableCell align="center">Subject</StyledTableCell>
             <StyledTableCell align="center">Description</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {enquiryData.map((element) => (              
-            <>
+          {enquiryData.map((element) => (
             <StyledTableRow>
-              <StyledTableCell  scope="row">{element.firstname}</StyledTableCell>
+              <StyledTableCell  align="center" scope="row">
+                {element.firstname}
+              </StyledTableCell>
               <StyledTableCell align="center">{element.lastname}</StyledTableCell>
               <StyledTableCell align="center">{element.email}</StyledTableCell>
               <StyledTableCell align="center">{element.mobilePhoneNum}</StyledTableCell>
               <StyledTableCell align="center">{element.subject}</StyledTableCell>
               <StyledTableCell align="center">{element.description}</StyledTableCell>
             </StyledTableRow>
-            </>
-            
           ))}
         </TableBody>
       </Table>

@@ -76,27 +76,37 @@ const getMovieData=async()=>{
 }
 
   return (
-    <div className='container py-5'>
-    <div className='fs-1 text-center pb-4'>Add Movie</div>
-   <Box
+    <>
+        
+     {/* <div className='container py-5'> */}
+        <Box border={1} borderColor="grey.600" borderRadius={6}
       component="form"
       sx={{
-        '& .MuiTextField-root': { width: '45ch' },
+        '& .MuiTextField-root': { width: '39ch' ,height:'8ch' },boxShadow:13,
       }}
       noValidate
       autoComplete="off" 
-      onSubmit = {formik.handleSubmit}
+      onSubmit = {formik.handleSubmit}  style={{margin:"10%", padding:"4% 3%"}}
     >
-       <Stack direction="row"  useFlexGap flexWrap="wrap" spacing={{ xs: 2, sm: 4 }}>
+          <div style={{display:"flex",gap:"59.5%",marginBottom:"5%"}} >
+
+{/* Back */}
+<button  className='btn btn-secondary py-3 px-5 fs-4' onClick={()=>{navigate('/allmovies')}} ><i class="fa-solid fa-circle-left me-2"></i>BACK</button>
+
+{/* ADD MOVIE */}
+<button className='btn btn-warning  py-3 px-5 fs-4'><i class="fa-solid fa-circle-plus me-2"></i>ADD MOVIE</button>
+</div>
+  
+        <Stack direction="row"  useFlexGap flexWrap="wrap" spacing={{ xs: 2, sm: 4 }}>
   
         {/* MOVIE NAME */}
-        <TextField
+        <TextField 
           required
           label="Movie Name"
           name="moviename"
           id="moviename"
           onChange={formik.handleChange}
-          defaultValue={formik.values.moviename}
+          defaultValue={formik.values.moviename} 
             />
         {formik.errors.moviename && formik.touched.moviename? (
           <div>{formik.errors.moviename}</div>
@@ -141,12 +151,6 @@ const getMovieData=async()=>{
           required
           label="Cast"
           name="cast" id="cast"  onChange={formik.handleChange} value={formik.values.cast} /> 
-
-        {/* MOVIE TRAILER */}
-            <TextField
-          required
-          label="Movie Trailer"
-          name="trailer" id="trailer"  onChange={formik.handleChange} value={formik.values.trailer} /> 
     
         {/* Publish Year */}
             <TextField
@@ -173,19 +177,17 @@ const getMovieData=async()=>{
           label="Movie Genres"
           name='genres' id="genres"  onChange={formik.handleChange} value={formik.values.genres} /> 
        
+           {/* MOVIE TRAILER */}
+           <TextField
+          required
+          label="Movie Trailer"
+          name="trailer" id="trailer"  onChange={formik.handleChange} value={formik.values.trailer} style={{width:"60ch"}} /> 
+
   {/* Summary */}
     <TextField required id="summary" 
-    label="Summary" name="summary"  onChange={formik.handleChange} value={formik.values.summary} /> 
-
+    label="Summary" name="summary"  onChange={formik.handleChange} value={formik.values.summary} style={{width:"60ch"}}  /> 
   </Stack>
-  <div style={{marginTop:"2%"}} >
-
-    {/* Back */}
-    <Button style={{backgroundColor:"grey",marginRight:"2%"}} type="submit" variant="contained" onClick={()=>{navigate('/allmovies')}} >BACK</Button>
-
-  {/* ADD MOVIE */}
-  <Button color="warning" type="submit" variant="contained">ADD MOVIE</Button>
-</div>
- </Box>
-</div>
+   </Box>
+{/* </div> */}
+</>
   );}

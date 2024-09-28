@@ -16,6 +16,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import LikeCard from '../LikeCard';
 import { useNavigate } from "react-router-dom";
+import {url} from '../../utils/constant'
+import axios from 'axios';
+
 
 export default function MovieCard({movieposter,moviename,rating,summary,cast,_id,setMovieData,element}) {
   const [expanded, setExpanded] = React.useState(false);
@@ -24,7 +27,7 @@ export default function MovieCard({movieposter,moviename,rating,summary,cast,_id
 
   const getMovieData = async()=>{
       console.log("Movie data is called......")
-      let res = await fetch('https://66760c9da8d2b4d072f24534.mockapi.io/movie/movie')
+      let res = await fetch(`${url}/movie`)
       let data = await res.json()
       console.log(data)
       setMovieData(data)//movies
@@ -41,16 +44,26 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-// const [summaryShow,setSummaryShow] = useState(false)
-// const [castShow,setCastShow] = useState(false)
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
-    setSummaryShow(!summaryShow)
-    setCastShow(false)
   };
 
-  return (
+  const token = sessionStorage.getItem('token')
+  console.log(token)
+  
+  let config = {
+    headers:{
+      Authorization:`Bearer ${token}`
+    }
+  }
+
+  const deleteMovie=async()=>{
+    console.log("Movie Deleted from the DB..")
+    let res = await axios.delete(`${url}/deletemovie/${_id}`,config)
+    console.log(res)
+}
+
+return (
     <Card sx={{ maxWidth:440, mb:4 }}  >
       <CardHeader
         avatar={
@@ -59,10 +72,11 @@ const ExpandMore = styled((props) => {
           </Avatar>
         }
         action={
+          // 3 dots icons
           <IconButton aria-label="settings" onClick={()=>{
-            navigate(`/movie/in/${id}`)
+            navigate(`/movietrailer/${_id}`)
         }}>
-        <MoreVertIcon />
+        <MoreVertIcon /> 
         </IconButton>
         }
         title={moviename}
@@ -72,9 +86,7 @@ const ExpandMore = styled((props) => {
     component="img" height="185" image={movieposter}alt="movieposter"/>
      
     <CardActions>
-    {/* <IconButton aria-label="add to favorites"> */}
-    {/* <FavoriteIcon /> */}
-    
+     
     <LikeCard/>
 
     {/* Edit Icon */}
@@ -83,18 +95,10 @@ const ExpandMore = styled((props) => {
     {/* Delete Icon */}
     <button className="btn px-2" onClick={()=>deleteMovie()}><i className="fa-solid fa-trash text-white"></i></button>
     
-    {/* ADD to CART */}
-    <button className="btn px-1" onClick={()=>{setCartUtxt(cartUCtxt+1)}}><i class="fa-solid fa-cart-shopping text-white"></i></button>
-    
     {/* REDUX */}
-    <button className="btn px-w text-white" onClick={()=>{handleAdditem(element)}}>Redux</button>
+    <button className="btn px-w text-white" onClick={()=>{handleAdditem(element)}}><i className="fa-solid fa-cart-shopping text-white"></i></button>
 
-    {/* </IconButton> */}
-    {/* <IconButton aria-label="share"> */}
-    {/* <ShareIcon /> */}
-    {/* </IconButton> */}
-
-    <ExpandMore
+   <ExpandMore
     expand={expanded} onClick={handleExpandClick}aria-expanded={expanded} aria-label="show more">
     <ExpandMoreIcon />
     </ExpandMore>
