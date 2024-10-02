@@ -91,10 +91,10 @@ const getMovieData=async()=>{
           <div style={{display:"flex",gap:"59.5%",marginBottom:"5%"}} >
 
 {/* Back */}
-<button  className='btn btn-secondary py-3 px-5 fs-4' onClick={()=>{navigate('/allmovies')}} ><i class="fa-solid fa-circle-left me-2"></i>BACK</button>
+<button  className='btn btn-secondary py-3 px-5 fs-4' onClick={()=>{navigate('/allmovies')}} ><i className="fa-solid fa-circle-left me-2"></i>BACK</button>
 
 {/* ADD MOVIE */}
-<button className='btn btn-warning  py-3 px-5 fs-4'><i class="fa-solid fa-circle-plus me-2"></i>ADD MOVIE</button>
+<button className='btn btn-warning  py-3 px-5 fs-4'><i className="fa-solid fa-circle-plus me-2"></i>ADD MOVIE</button>
 </div>
   
         <Stack direction="row"  useFlexGap flexWrap="wrap" spacing={{ xs: 2, sm: 4 }}>

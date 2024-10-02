@@ -10,26 +10,25 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import LikeCard from './LikeCard';
+import LikeCard from '../Movie/LikeCard';
 import { useNavigate } from "react-router-dom";
 import {url} from '../../utils/constant'
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../../utils/cartSlice';
 
+export default function MovieCard({movieposter,moviename,rating,summary,cast,_id,setMovieData,element,disLikeNum,likeNum}) {
+// Store:
+const dispatch=useDispatch()
 
-export default function MovieCard({movieposter,moviename,rating,summary,cast,_id,setMovieData,element}) {
   const [expanded, setExpanded] = React.useState(false);
   //useNavigate()
   const navigate=useNavigate()
-
-  const getMovieData = async()=>{
-      console.log("Movie data is called......")
-      let res = await fetch(`${url}/movie`)
-      let data = await res.json()
-      console.log(data)
-      setMovieData(data)//movies
-  }
+console.log(disLikeNum,likeNum)
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -42,26 +41,43 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
+// const [summaryShow,setSummaryShow] = useState(false)
+// const [castShow,setCastShow] = useState(false)
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    setSummaryShow(!summaryShow)
+    setCastShow(false)
   };
 
-  const token = sessionStorage.getItem('token')
-  console.log(token)
-  
-  let config = {
-    headers:{
-      Authorization:`Bearer ${token}`
+  const token=sessionStorage.getItem('token')
+    let config={
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
     }
+    
+  const handleAdditem=async(movieItem)=>{
+    console.log(movieItem)
+    
+    // >> api call for updating the backend >> saving to the DB
+    let res=await axios.post(`${url}/addorder`, movieItem,config)
+    console.log(res)
+    if(res.data){
+      // Add the data to the store and from the store we can use it everywhere
+      dispatch(addItem(res.data.orderData))
+     }
   }
+
+
 
   const deleteMovie=async()=>{
     console.log("Movie Deleted from the DB..")
     let res = await axios.delete(`${url}/deletemovie/${_id}`,config)
-    console.log(res)
-}
+   console.log(res)   
+  }
 
-return (
+  return (
     <Card sx={{ maxWidth:440, mb:4 }}  >
       <CardHeader
         avatar={
@@ -70,11 +86,10 @@ return (
           </Avatar>
         }
         action={
-          // 3 dots icons
           <IconButton aria-label="settings" onClick={()=>{
             navigate(`/movietrailer/${_id}`)
         }}>
-        <MoreVertIcon /> 
+        <MoreVertIcon />
         </IconButton>
         }
         title={moviename}
@@ -84,19 +99,26 @@ return (
     component="img" height="185" image={movieposter}alt="movieposter"/>
      
     <CardActions>
-     
-    <LikeCard/>
+    {/* <IconButton aria-label="add to favorites"> */}
+    {/* <FavoriteIcon /> */}
+    
+    <LikeCard likeNum={likeNum} disLikeNum={disLikeNum}/>
 
     {/* Edit Icon */}
     <button className="btn px-1" onClick={()=>navigate(`/editmovie/${_id}`)}><i className="fa-solid fa-pencil text-white"></i></button>
 
     {/* Delete Icon */}
-    <button className="btn px-2" onClick={()=>deleteMovie()}><i className="fa-solid fa-trash text-white"></i></button>
+    <button className="btn px-2" onClick={(values)=>deleteMovie()}><i className="fa-solid fa-trash text-white"></i></button>
     
     {/* REDUX */}
     <button className="btn px-w text-white" onClick={()=>{handleAdditem(element)}}><i className="fa-solid fa-cart-shopping text-white"></i></button>
 
-   <ExpandMore
+    {/* </IconButton> */}
+    {/* <IconButton aria-label="share"> */}
+    {/* <ShareIcon /> */}
+    {/* </IconButton> */}
+
+    <ExpandMore
     expand={expanded} onClick={handleExpandClick}aria-expanded={expanded} aria-label="show more">
     <ExpandMoreIcon />
     </ExpandMore>

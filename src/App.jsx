@@ -1,14 +1,14 @@
 import './App.css'
 import AboutUs_Section from './Components/AboutUs_page/AboutUs_Section';
 import MovieDisplay from './Components/Movie/MovieDisplay';
-import NavBar from './Components/HomeScreen/NavBar';
+import NavBar from './Components/HomeSreen/NavBar';
 import Service_Section from './Components/Service_page/Service_Section';
 import ContactUs_Section from './Components/Enquiries/ContactUs_Section';
-import Homepage from './Components/HomeScreen/Homepage';
+import Homepage from './Components/HomeSreen/Homepage';
 import {Route,Routes} from 'react-router-dom';
-import Footer from './Components/HomeScreen/Footer';
-import MovieTrailer from './Components/Movie/MovieTrailer'
-import {useEffect,useState} from 'react'
+import Footer from './Components/HomeSreen/Footer';
+import MovieTrailer from './Components/Movie/MovieTrailer';
+import React, {useEffect,useState} from 'react'
 import AddMovie from './Components/Movie/AddMovie'
 import EditMovie from './Components/Movie/EditMovie';
 import store from './utils/store';
@@ -26,8 +26,8 @@ import Table from './Components/Enquiries/CustomizedTables'
 
 function App() {
   const [movieData,setMovieData] = useState([])
+  const [cart,setCart]=useState(0)
 // signin part
-
 const [isAuthenticated,setIsAuthenticated]=useState(false)
 
 useEffect(()=>{
@@ -66,7 +66,6 @@ const [mode, setMode]=useState("dark")
   <ThemeProvider theme={theme}>
   <CssBaseline /> 
   <Provider store={store}>
-   
     <div>
     <NavBar mode={mode} setMode={setMode} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
     <Routes>
@@ -89,7 +88,7 @@ const [mode, setMode]=useState("dark")
     <Footer />
     </div>
     </div>
-  </Provider>
+    </Provider>
   </ThemeProvider>
   </>
   )

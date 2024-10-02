@@ -55,7 +55,7 @@ const postEnquiryDetail=async(newEnquiry)=>{
     return(
 <>
       {/* ALL ENQUIRIES BUTTON */}
-      <button style={{ marginTop:"2%", marginLeft:"85%"}} className="px-4 btn btn-warning" onClick={()=>navigate('/allenquiries')} >All Enquiries <i class="fa-solid fa-circle-question ms-1"></i></button> 
+      <button style={{ marginTop:"2%", marginLeft:"85%"}} className="px-4 btn btn-warning" onClick={()=>navigate('/allenquiries')} >All Enquiries <i className="fa-solid fa-circle-question ms-1"></i></button> 
       
       {/*FORM  */}
     <form  onSubmit={formik.handleSubmit} className="container pb-5" style={{width:"80%"}}>

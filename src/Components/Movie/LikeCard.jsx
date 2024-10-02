@@ -1,27 +1,28 @@
 import { useState } from "react";
 
-
-function LikeCard(){
-    const [like,setLike] = useState(0)
-    const [disLike,setDisLike] = useState(0)
+function LikeCard({likeNum,disLikeNum}){
+    const [like,setLike] = useState(likeNum)
+    const [disLike,setDisLike] = useState(disLikeNum)
 
     return(
-        <> 
-       <i style={{color:"white"}} className="fa-regular fa-thumbs-up position-relative fs-5 mx-2" onClick={()=>{
-            setLike(like+1)
+        <>
+        {/* more than 1,000 -> in "K" */}
+          <i style={{color:"white"}} className="fa-regular fa-thumbs-up position-relative fs-5 mx-2 pt-2" onClick={()=>{
+            setLike(parseInt(like)+1) //converting to number
         }}>
-        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill">
+        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill"style={{fontSize:"65%"}}>
             {like}
        </span>
         </i>
 
-        <i style={{color:"white"}} className="fa-regular fa-thumbs-down position-relative fs-5 mx-2" onClick={()=>{
-            setDisLike(disLike+1)
-        }}>
-        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill">
+        <i style={{color:"white"}} className="fa-regular fa-thumbs-down position-relative fs-5 mx-2 pt-2" onClick={()=>{
+            setDisLike(parseInt(disLike)+1)
+        }}>  
+        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill " style={{fontSize:"65%"}}>
             {disLike}
        </span>
-        </i>
+       </i>
+     
       
 
 
