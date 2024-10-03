@@ -19,7 +19,6 @@ function OrderPage() {
   return (
     <>
       <div className="mx-4">
-        <h1 className=" py-1">Cart Summary</h1>
         <div className="text-start py-1 text-secondary">
           Date: <span className="text-white">Feb 16,2022</span>
         </div>
