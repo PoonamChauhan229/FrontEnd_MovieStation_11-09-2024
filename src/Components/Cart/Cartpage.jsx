@@ -60,12 +60,12 @@ function Cartpage(){
          <OrderPage/>
 
         {/* <div>CartPage</div> */}
-        <div className="d-flex m-2 flex-wrap">
+        {/* <div className="d-flex m-2 flex-wrap">
         {
             cartItems.map((element,index)=><CartCard {...element}/>
         )
-         }
-         </div>
+         } */}
+         {/* </div> */}
         </div>
          </>
     )

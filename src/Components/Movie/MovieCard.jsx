@@ -58,15 +58,10 @@ const ExpandMore = styled((props) => {
     }
     
   const handleAdditem=async(movieItem)=>{
-    console.log(movieItem)
-    
+    console.log(movieItem)    
     // >> api call for updating the backend >> saving to the DB
-    let res=await axios.post(`${url}/addorder`, movieItem,config)
-    console.log(res)
-    if(res.data){
-      // Add the data to the store and from the store we can use it everywhere
-      dispatch(addItem(res.data.orderData))
-     }
+    let res=await axios.post(`${url}/addcart`, movieItem,config)
+    console.log(res)    
   }
 
 

@@ -12,7 +12,7 @@ import React, {useEffect,useState} from 'react'
 import AddMovie from './Components/Movie/AddMovie'
 import EditMovie from './Components/Movie/EditMovie';
 import store from './utils/store';
-import {Provider} from 'react-redux'; 
+import {Provider, useDispatch} from 'react-redux'; 
 import Cartpage from './Components/Cart/Cartpage';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -23,8 +23,10 @@ import {url} from './utils/constant'
 import axios from 'axios';
 import AllEnquiries from './Components/Enquiries/AllEnquiries';
 import Table from './Components/Enquiries/CustomizedTables'
+import { addItem } from './utils/cartSlice';
 
 function App() {
+
   const [movieData,setMovieData] = useState([])
   const [cart,setCart]=useState(0)
 // signin part
@@ -35,23 +37,24 @@ useEffect(()=>{
   console.log(token)
   setIsAuthenticated(true)
 },[])
-
-const getMovieData = async () => {
-  const token=sessionStorage.getItem('token')
+const token=sessionStorage.getItem('token')
   let config={
     headers:{
       Authorization:`Bearer ${token}`
     }
   }
+const getMovieData = async () => {  
   console.log("Movie data is called....");
   let res = await axios.get(`${url}/movie`,config)//response in res.data >> moviedata
   console.log(res.data.movieData);
   setMovieData(res.data.movieData);
 };
 
+
   useEffect(()=>{
     getMovieData()
   },[]) //API Call
+
 //initial value is stored as dark
 const [mode, setMode]=useState("dark")
 
