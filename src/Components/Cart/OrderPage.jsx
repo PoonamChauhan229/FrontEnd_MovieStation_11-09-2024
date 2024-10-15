@@ -1,11 +1,13 @@
 import { useSelector } from "react-redux";
 import ShoppingCard from "./ShoppingCard";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { url } from "../../utils/constant";
 
 function OrderPage() {
   const [sum,setSum]=useState(0)
   const cartItems=useSelector(store=>store.cart.items)
-    console.log(cartItems)
+  console.log(cartItems)
 
     useEffect(()=>{
       if(cartItems){
@@ -14,6 +16,23 @@ function OrderPage() {
         setSum(total)
       }
     },[])
+
+    const token = sessionStorage.getItem('token')
+    console.log(token)
+
+    let config = {
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    }
+    const handleAddOrder=async()=>{
+      console.log("OrderPage")
+      console.log(cartItems)
+      // Buy Now >> Order Page|| Summary Page
+        
+      let res = await axios.post(`${url}/addorder`,{movies: cartItems},config)      
+      console.log(res)
+    }
     
   
   return (
@@ -44,7 +63,9 @@ function OrderPage() {
         ></div>
         <div className="text-end" style={{ marginRight: "41%" }}>
           Total {sum}
-          <button>Buy Now</button>
+          <button
+          onClick={()=>handleAddOrder()}
+          >Buy Now</button>
         </div>
       </div>
     </>

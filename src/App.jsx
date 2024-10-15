@@ -73,13 +73,13 @@ const [mode, setMode]=useState("dark")
     <NavBar mode={mode} setMode={setMode} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
     <Routes>
       <Route path="/" element={<Homepage movieData={movieData}/>}/>
-      <Route path='/allmovies' element={<MovieDisplay movieData={movieData} setMovieData={setMovieData}/>}/>
-      <Route path='/addmovie' element={<AddMovie setMovieData={setMovieData}/>}/>
+      <Route path='/allmovies' element={<MovieDisplay/>}/>
+      <Route path='/addmovie' element={<AddMovie/>}/>
       <Route path='/about' element={<AboutUs_Section/>}/>
       <Route path='/services' element={<Service_Section/>}/>
       <Route path='/contact' element={<ContactUs_Section/>}/>
       <Route path="/movietrailer/:id" element={<MovieTrailer movieData={movieData} setMovieData={setMovieData}/>}/>
-      <Route path="/editmovie/:id" element={<EditMovie movieData={movieData} />}/>
+      <Route path="/editmovie/:id" element={<EditMovie/>}/>
       <Route path="/cartpage" element={<Cartpage/>}></Route>
       <Route path="/signin" element={<SignIn isAuthenticated = {isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>}></Route>
       <Route path="/signup" element={<SignUp/>}></Route>

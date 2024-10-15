@@ -1,5 +1,4 @@
 import Stack from '@mui/material/Stack';
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -8,10 +7,11 @@ import * as Yup from "yup";
 import { useFormik } from 'formik'
 import {url} from '../../utils/constant'
 import axios from 'axios';
+import { useState } from 'react';
 
-
-export default function AddMovie({setMovieData}) {
+export default function AddMovie() {
 const navigate = useNavigate();
+const [movieData,setMovieData] = useState([])
 
 const formSchema=Yup.object().shape({
   moviename:Yup.string().min(5,"Too Short"),

@@ -20,6 +20,7 @@ let config = {
   }
 }
 
+
 const getMovieData=async()=>{
     console.log("Movie data is called.........")
     let res = await fetch (`${url}/movie/${id}`,config)//API call
