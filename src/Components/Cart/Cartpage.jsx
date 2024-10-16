@@ -2,9 +2,10 @@ import { useDispatch, useSelector } from "react-redux"
 import CartCard from "./CartCard"
 import { removeItem, removeLastItem,removeFirstItem } from "../../utils/cartSlice"
 import { useNavigate } from "react-router-dom"
-import OrderPage from "./OrderPage"
+import OrderPage from "./CartSummaryPage"
 import { url } from "../../utils/constant"
 import axios from "axios"
+import CartSummaryPage from "./CartSummaryPage"
 
 function Cartpage(){
     const cartItems=useSelector(store=>store.cart.items)
@@ -57,15 +58,7 @@ function Cartpage(){
             handleRemoveFirstItem()
         }}>Remove 1 item from beginning</button>
 
-         <OrderPage/>
-
-        {/* <div>CartPage</div> */}
-        {/* <div className="d-flex m-2 flex-wrap">
-        {
-            cartItems.map((element,index)=><CartCard {...element}/>
-        )
-         } */}
-         {/* </div> */}
+         <CartSummaryPage/>
         </div>
          </>
     )

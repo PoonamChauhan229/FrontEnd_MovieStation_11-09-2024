@@ -1,24 +1,30 @@
-import React from 'react'
+import React from "react";
 
-function CartCard({movieposter,moviename,rating,summary}){
-    return(
-        <>
-       
-        {/* POSRTER IMAGE */}
-        <div>
-        <img src={movieposter} alt="" style={{height:"135px",width:"299px"}} /> 
+function CartCard({movieposter,moviename,amount}) {
+ 
+    
+  return (
+    <>
+      <div className="d-flex pt-4 pb-2 ">
+        <img
+          src={movieposter}
+          className="rounded"
+          alt=""
+          style={{ height: "120px", with: "10%" }}
+        />
+        <div className="text-start ms-4 mt-3" style={{ width: "65%" }}>
+          <div style={{ fontSize: "120%" }}>{moviename}</div>
+          <div className="text-secondary">Space Gray | 32GB | 1TB</div>
         </div>
-        {/* MOVIENAME */}
-        <div className="movieContent">
-            <div style={{display:"flex",justifyContent:"space-between",margin:"0px 7px 0px 5px "}}>
-            <h6 className="text1">{moviename}</h6>
-            {/* RATING */}
-            <h6 className="text2">{rating}</h6>
-            </div>
-            <div  style={{display:"flex",justifyContent:"center"}}>{summary}</div>
-            </div>
-        
-        </>
-    )
+
+        {/* Price & Qty */}
+        <div className="text-end" style={{ width: "35%" }}>
+          <div>${amount}</div>
+          <div className="text-secondary">Qty:1</div>
+        </div>
+      </div>
+    </>
+  );
 }
-export default CartCard
+
+export default CartCard;

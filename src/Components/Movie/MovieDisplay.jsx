@@ -10,6 +10,7 @@ function MovieDisplay() {
     const[searchTerm,setSearchTerm]=useState("")// hold serach value
     const [filterMovieData,setFilterMovieData] = useState([]) // filtered movie Value
     const dispatch=useDispatch()
+
     const filterData=(searchText,allmovies)=>{
         // console.log(searchText,allmovies)
         let fData=allmovies.filter((element)=>element.moviename.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -42,37 +43,33 @@ function MovieDisplay() {
       useEffect(()=>{
         getMovieData()
       },[])
-      //console.log(searchTerm)
 
-      const deleteMovie=async(_id)=>{
-        console.log("Movie Deleted from the DB..")
-        let res = await axios.delete(`${url}/deletemovie/${_id}`,config)
-       console.log(res)   
-       getMovieData()
-      }
-      const handleAdditem=async(movieItem)=>{
-        console.log(movieItem)    
-        // >> api call for updating the backend >> saving to the DB
-        let res=await axios.post(`${url}/addcart`, movieItem,config)
-        console.log(res)    
-        getCartData()
-      }
+    const deleteMovie=async(_id)=>{
+    console.log("Movie Deleted from the DB..")
+    let res = await axios.delete(`${url}/deletemovie/${_id}`,config)
+    console.log(res)   
+    getMovieData()
+    }
+      
+    const handleAdditem=async(movieItem)=>{
+    console.log(movieItem)    
+    // >> api call for updating the backend >> saving to the DB
+    let res=await axios.post(`${url}/addcart`, movieItem,config)
+    console.log(res)    
+    getCartData()
+    }
 
-      const getCartData=async()=>{            
-        let res = await axios.get(`${url}/cart`,config)//response in res.data >> moviedata
-        console.log(res.data.cartData);
-        if (res.data && res.data.cartData) {
-          dispatch(removeItem()); // Clear existing cart items
-      
-            res.data.cartData.map((element)=>dispatch(addItem(element)))
-            // dispatch(addItem(res.data.cartData))
-            
-        }
-      }
-      
-        // useEffect(()=>{
-        //   getCartData()
-        // },[]) //API Call
+    const getCartData=async()=>{            
+    let res = await axios.get(`${url}/cart`,config)//response in res.data >> moviedata
+    console.log(res.data.cartData);
+    if (res.data && res.data.cartData) {
+        dispatch(removeItem()); // Clear existing cart items from store    
+        res.data.cartData.map((element)=>dispatch(addItem(element)))// dispatching to the store     
+        
+    }
+    }      
+    
+    
 
     return (
         <>        

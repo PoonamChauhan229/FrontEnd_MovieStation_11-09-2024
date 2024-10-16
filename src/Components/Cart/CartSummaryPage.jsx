@@ -1,10 +1,15 @@
-import { useSelector } from "react-redux";
-import ShoppingCard from "./ShoppingCard";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "../../utils/constant";
+import CartCard from "./CartCard";
+import { removeItem } from "../../utils/cartSlice";
+import { useNavigate } from "react-router-dom";
+import { BsFillCartCheckFill } from "react-icons/bs";
 
-function OrderPage() {
+function CartSummaryPage() {
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
   const [sum,setSum]=useState(0)
   const cartItems=useSelector(store=>store.cart.items)
   console.log(cartItems)
@@ -32,6 +37,13 @@ function OrderPage() {
         
       let res = await axios.post(`${url}/addorder`,{movies: cartItems},config)      
       console.log(res)
+      if(res.status==200){// success response
+        await axios.delete(`${url}/clearcart`, config); // delete api call
+        //clear the redux store
+        dispatch(removeItem());
+        navigate('/orderpage')
+      }
+
     }
     
   
@@ -43,7 +55,7 @@ function OrderPage() {
         </div>
         <div className="border-top border-bottom border-secondary">
           {
-            cartItems.map((element)=><ShoppingCard {...element} />)
+            cartItems.map((element)=><CartCard {...element} />)
           }
         
         </div>
@@ -54,24 +66,22 @@ function OrderPage() {
         >Cart Summary
         </div>
         {/* Dotted underline */}
-        <div
-          style={{
-            borderBottom: "1px dotted grey",
-            width: "50%",
-            marginLeft: "50%",
-          }}
-        ></div>
-        <div className="text-end" style={{ marginRight: "41%" }}>
-          Total {sum}
-          <button
-          onClick={()=>handleAddOrder()}
-          >Buy Now</button>
-        </div>
-      </div>
+        <div style={{ borderBottom: "1px dotted grey"}}>
+                    </div>
+
+                    <div className="d-flex justify-content-between fs-5" >
+                        <div>Total: </div>
+                        <div> {sum}</div>
+                    </div>  
+                    <div className="text-end">
+                        <button className="btn btn-warning mt-5 mb-3" style={{width:"45%", fontSize:"2.25vh"}} onClick={() => {handleAddOrder()}} ><BsFillCartCheckFill className="pe-1 fs-2"/>Order Now </button>
+                    </div>
+        </div>     
+              
     </>
   );
 }
-export default OrderPage;
+export default CartSummaryPage;
 
 //Total
 //Order ID: Static
